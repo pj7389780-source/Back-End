@@ -7,12 +7,13 @@ const app = express()
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://mini-post-frontend.vercel.app",
   }),
 );
 connectDB()
 app.use(express.json())
 app.get("/",(req,res)=>{
+  const body = req.body
   res.send("Backend is running successfully")
 })
 app.use("/MiniInsta", upload.single("Image"), router);

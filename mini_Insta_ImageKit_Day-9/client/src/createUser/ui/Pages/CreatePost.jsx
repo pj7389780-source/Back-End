@@ -2,8 +2,9 @@ import { ImagePlus, ArrowUpRight } from "lucide-react";
 import useCreatePost from "../../hooks/uploadPost";
 
 const CreatePost = () => {
-  const { register, handleCreate, handleSubmit,errors } = useCreatePost();
-console.log(errors)
+  const { register, handleCreate, navigate , handleSubmit, errors } =
+    useCreatePost();
+
   return (
     <div className="min-h-screen w-full bg-[#111111] text-white flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-3xl grid md:grid-cols-2 border border-white/10 rounded-xl overflow-hidden bg-[#171717]">
@@ -32,6 +33,17 @@ console.log(errors)
 
         {/* Right Section */}
         <div className="p-6 sm:p-8">
+          {/* All Posts Button */}
+          <div className="flex justify-end mb-6">
+            <button
+              onClick={() => navigate("/allUsers")}
+              className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+            >
+              All Posts
+              <ArrowUpRight size={16} />
+            </button>
+          </div>
+
           <div className="mb-7">
             <p className="text-xs tracking-widest uppercase text-gray-500">
               New creation
@@ -58,8 +70,11 @@ console.log(errors)
                 placeholder="Write something meaningful..."
                 className="w-full mt-2 bg-[#111111] border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-white/40 resize-none transition-colors"
               />
+
               {errors.caption && (
-                <h1 className="text-red-800">{errors.caption.message}</h1>
+                <p className="text-red-500 text-xs mt-2">
+                  {errors.caption.message}
+                </p>
               )}
             </div>
 
@@ -79,18 +94,19 @@ console.log(errors)
                 </span>
 
                 <input
-                  {...register("Image",{
-                    required:{
-                      value:true,
-                      message:"Image is required"
-                    }
+                  {...register("Image", {
+                    required: {
+                      value: true,
+                      message: "Image is required",
+                    },
                   })}
                   type="file"
                   accept="image/*"
                   className="hidden"
                 />
+
                 {errors.Image && (
-                  <h1 className="text-red-800">{errors.Image.message}</h1>
+                  <p className="text-red-500 text-xs">{errors.Image.message}</p>
                 )}
               </label>
             </div>

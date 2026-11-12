@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Compass,
@@ -5,15 +6,19 @@ import {
   ImagePlus,
   Sparkles,
   RefreshCw,
+  Plus,
 } from "lucide-react";
 
 import { axiosInstance } from "../../../config/axiosInstance";
 import PostCard from "../components/PostCard";
+import { useNavigate } from "react-router";
 
 const Users = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
 
   const getAllUsers = async () => {
     try {
@@ -40,11 +45,14 @@ const Users = () => {
 
   return (
     <div className="min-h-screen bg-[#101010] text-white">
+
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 border-b border-white/[0.08] bg-[#101010]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black">
+              <ImagePlus size={20} />
             </div>
 
             <div>
@@ -56,25 +64,29 @@ const Users = () => {
               </p>
             </div>
           </div>
+          {/* Create Post + Explore */}
+          <div className="flex items-center gap-4">
 
-          <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 sm:flex">
-            <Search size={16} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Search moments..."
-              className="w-40 bg-transparent text-xs text-white outline-none placeholder:text-gray-600"
-            />
-          </div>
+            <button
+              onClick={() => navigate("/")}
+              className="flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-xs font-medium text-black transition hover:bg-gray-200"
+            >
+              <Plus size={16} />
+              Create Post
+            </button>
 
-          <div className="flex items-center gap-2 text-gray-400">
-            <Sparkles size={17} />
-            <span className="hidden text-xs sm:block">Explore</span>
+            <div className="flex items-center gap-2 text-gray-400">
+              <Sparkles size={17} />
+              <span className="hidden text-xs sm:block">Explore</span>
+            </div>
+
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-12">
+
         {/* Page Heading */}
         <section className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
@@ -118,7 +130,10 @@ const Users = () => {
             disabled={loading}
             className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-400 transition hover:bg-white/10 hover:text-white disabled:opacity-50"
           >
-            <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
+            <RefreshCw
+              size={14}
+              className={loading ? "animate-spin" : ""}
+            />
             Refresh
           </button>
         </div>
@@ -127,17 +142,23 @@ const Users = () => {
         {loading && (
           <div className="flex min-h-[300px] flex-col items-center justify-center gap-4">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-white" />
-            <p className="text-sm text-gray-500">Discovering moments...</p>
+            <p className="text-sm text-gray-500">
+              Discovering moments...
+            </p>
           </div>
         )}
 
         {/* Error */}
         {!loading && error && (
           <div className="rounded-2xl border border-red-500/20 bg-red-500/[0.04] px-6 py-16 text-center">
-            <p className="text-lg font-medium">Something went wrong.</p>
+            <p className="text-lg font-medium">
+              Something went wrong.
+            </p>
+
             <p className="mt-2 text-sm text-gray-500">
               We couldn't load the community posts.
             </p>
+
             <button
               onClick={fetchPosts}
               className="mt-6 rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-black hover:bg-gray-200"
@@ -162,7 +183,9 @@ const Users = () => {
                 <ImagePlus size={28} className="text-gray-500" />
               </div>
 
-              <h3 className="mt-6 text-xl font-medium">No moments yet.</h3>
+              <h3 className="mt-6 text-xl font-medium">
+                No moments yet.
+              </h3>
 
               <p className="mt-2 max-w-xs text-sm leading-6 text-gray-500">
                 The community is quiet for now. Come back when new stories
@@ -177,6 +200,7 @@ const Users = () => {
             Mini Insta · Your world. Your perspective.
           </p>
         </footer>
+
       </main>
     </div>
   );
